@@ -38,7 +38,7 @@
 	var videoArea = $('#video_area');
 
 
-	var socket = io.connect('http://localhost');
+	var socket = io.connect(document.location.origin);
 
 	function sync(data) {
 		if (data['src'] != getPayload(video)['src']) {
