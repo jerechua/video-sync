@@ -1,12 +1,19 @@
 <html>
 <body>
 	<h1>Hello world!</h1>
-	<video id="my_video_1" class="video-js vjs-default-skin" controls
-		 preload="auto" width="640" height="264" poster="my_video_poster.png"
-		 data-setup="{}">
-		 <source src="my_video.mp4" type='video/mp4'>
-		 <source src="my_video.webm" type='video/webm'>
-	</video>
+	<div>
+		<div>
+			<h4>Use for testing:</h4>
+			<span>public/sample.mp4</span>
+		</div>
+		<input id="video_url" type="text" placeholder="video mp4 url here"></input>
+		<button id="change_url">Change video</button>
+	</div>
+	<div id='video_area'>
+		<video id='main_video' controls>
+			 <source src="public/sample.mp4" type='video/mp4'>
+		</video>
+	</div>
 
 </body>
 <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
@@ -16,48 +23,87 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-	var video = $('#main-video');
+	var video = $('#main_video');
+	var videoUrl = $('#video_url');
+	var changeVideoUrl = $('#change_url');
+	var videoArea = $('#video_area');
 	var socket = io.connect('http://localhost');
 
-	socket.on('player:pause', function(data) {
-		// console.log('got someone asking to pause');
-		// console.log(data);
-		video[0].pause();
+	function sync(data) {
+		if (data['src'] != getPayload(video)['src']) {
+			changeSource(data['src']);
+		}
 		video[0].currentTime = data['time'];
+	}
+	socket.on('startup:current_video', function(data) {
+		changeSource(data['src']);
+	});
+
+	socket.on('player:pause', function(data) {
+		video[0].pause();
+		sync(data);
 	});
 
 	socket.on('player:play', function(data) {
-		// console.log('got someone asking to play');
-		// console.log(data);
-		video[0].currentTime = data['time'];
+		sync(data);
 		video[0].play();
 	});
 
 	socket.on('player:timechange', function(data) {
 		// Implement this for slow internet connection buffers
 	});
+
+	socket.on('player:change_src', function(data) {
+		changeSource(data['src']);
+	});
 </script>
 <script>
 	function getPayload(video) {
-		var time = video[0].currentTime;
+		var video = video[0];
 		return {
-			'time': time
+			'src': video.currentSrc,
+			'time': video.currentTime
 		};
 	};
 
-	$(function() {
+	function _buildVideoElem(sourceUrl) {
+	 	return "<video id='main_video' controls>" +
+			"<source src=" + sourceUrl + " type='video/mp4'>" +
+			"</video>";
+	};
+
+	function changeSource(sourceUrl) {
+		console.log(sourceUrl);
+		console.log(_buildVideoElem(sourceUrl));
+		videoArea.html(_buildVideoElem(sourceUrl));
+		video = $('#main_video');
+		bindVideoEvents();
+	};
+
+	function bindVideoEvents() {
 		video.on('pause', function() {	
-			// console.log("sending pause");
 			socket.emit("player:pause", getPayload(video));
 		});
 		video.on('play', function() {
 			socket.emit("player:play", getPayload(video));
-			// console.log("sending play");
 		});
 		video.on('timeupdate', function(data) {
-			// console.log(data);
 		});
+
+		changeVideoUrl.click(function() {
+			console.log("changing url");
+			var newUrl = videoUrl.val();
+			changeSource(newUrl);
+			socket.emit('player:change_src', {'src': newUrl});
+		});
+	};
+
+
+	$(function() {
+		bindVideoEvents();
 	});
+
+
 
 </script>
 </html>
