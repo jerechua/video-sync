@@ -1,6 +1,56 @@
 <html>
-<script src="/socket.io/socket.io.js"></script>
 <body>
 	<h1>Hello world!</h1>
+	<video id="main-video" controls autoplay>
+		<source src="/public/sample.mp4"/>
+	</video>
+
 </body>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var video = $('#main-video');
+	var socket = io.connect('http://localhost');
+
+	socket.on('player:pause', function(data) {
+		// console.log('got someone asking to pause');
+		// console.log(data);
+		video[0].pause();
+		video[0].currentTime = data['time'];
+	});
+
+	socket.on('player:play', function(data) {
+		// console.log('got someone asking to play');
+		// console.log(data);
+		video[0].currentTime = data['time'];
+		video[0].play();
+	});
+
+	socket.on('player:timechange', function(data) {
+
+	});
+</script>
+<script>
+	function getPayload(video) {
+		var time = video[0].currentTime;
+		return {
+			'time': time
+		};
+	};
+
+	$(function() {
+		video.on('pause', function() {	
+			// console.log("sending pause");
+			socket.emit("player:pause", getPayload(video));
+		});
+		video.on('play', function() {
+			socket.emit("player:play", getPayload(video));
+			// console.log("sending play");
+		});
+		video.on('timeupdate', function(data) {
+			// console.log(data);
+		});
+	});
+
+</script>
 </html>

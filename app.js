@@ -4,14 +4,11 @@ var express = require('express'),
 
 app.locals.pretty = true;
 
-// var corsMiddleware = function(req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     next();
-// }
-
 /** config */
 app.configure(function() {
     app.set('port', process.argv[2] || process.env.PORT || 1337);
+    app.use('/public', express.static(__dirname + '/public'));
+    app.use(express.bodyParser());
 });
 
 app.get('/', function(req, res) {
