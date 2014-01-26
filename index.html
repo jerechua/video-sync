@@ -17,6 +17,7 @@
 	<div id='video_area'>
 		<video id='main_video' controls>
 			 <source src="public/sample.mp4" type='video/mp4'>
+			 <input type="range" id="seek-bar" value="0">
 		</video>
 	</div>
 
@@ -41,10 +42,15 @@
 	var socket = io.connect(document.location.origin);
 
 	function sync(data) {
-		if (data['src'] != getPayload(video)['src']) {
-			changeSource(data['src']);
+		var videoStats = getPayload(video);
+		if (data.src != videoStats.src) {
+			changeSource(data.src);
 		}
-		video[0].currentTime = data['time'];
+		// Might need to be refactored, this will be hit
+		// n client times for each user if someone seeks
+		if (Math.abs(data.time - videoStats.time) > 1) {
+			video[0].currentTime = data['time'];
+		}
 	}
 	socket.on('startup:current_video', function(data) {
 		changeSource(data['src']);
@@ -64,8 +70,9 @@
 		video[0].play();
 	});
 
-	socket.on('player:timechange', function(data) {
-		// Implement this for slow internet connection buffers
+	socket.on('player:seek', function(data) {
+		video[0].pause();
+		sync(data);
 	});
 
 	socket.on('player:change_src', function(data) {
@@ -73,7 +80,6 @@
 	});
 
 	socket.on('user:update:clientlist', function(data) {
-		console.log(data);
 		var htmlString = "<ul>";
 		for (var i = 0; i < data.length; i++) {
 			htmlString += "<li>";
@@ -91,6 +97,7 @@
 	});
 </script>
 <script>
+	var _IS_SEEKING = false;
 	function changeName(newName) {
 		var payload = {
 			'name': newName
@@ -127,16 +134,16 @@
 			socket.emit("player:play", getPayload(video));
 		});
 
-		video.on('timeupdate', function(data) {
+		video.on('seeked', function(data) {
+			video[0].pause();
+			socket.emit("player:seek", getPayload(video));	
 		});
-
+		
 		video.on('canplay', function() {
-			console.log('can play');
 			socket.emit('player:ready', getPayload(video));
 		});
 
 		changeVideoUrl.click(function() {
-			console.log("changing url");
 			var newUrl = videoUrl.val();
 			changeSource(newUrl);
 			socket.emit('player:change_src', {'src': newUrl});
@@ -150,8 +157,5 @@
 		});
 		bindVideoEvents();
 	});
-
-
-
 </script>
 </html>

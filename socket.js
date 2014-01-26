@@ -66,13 +66,17 @@ exports.setupSocket = function(server) {
             socket.broadcast.emit('player:play', data);
         });
 
-        socket.on('player:timeupdate', function(data) {
-            // Implement this for slow internet connection buffers
+        socket.on('player:seek', function(data) {
+            socket.broadcast.emit('player:seek', data);
         });
 
         socket.on('player:change_src', function(data) {
             videoState = PAUSE;
             currentVideo = data['src'];
+            _.each(clientList, function(client) {
+                client.status = NOT_READY;
+            });
+            emitClientList(socket);
             socket.broadcast.emit('player:change_src', data);
         });
 
