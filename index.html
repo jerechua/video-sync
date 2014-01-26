@@ -1,13 +1,18 @@
 <html>
 <body>
-	<h1>Hello world!</h1>
 	<div>
 		<div>
-			<h4>Use for testing:</h4>
-			<span>public/sample.mp4</span>
+			<h3>Welcome 
+				<input id='name'></input>
+				<button id="update_name">change your name</button>
+			</h3>
 		</div>
 		<input id="video_url" type="text" placeholder="video mp4 url here"></input>
 		<button id="change_url">Change video</button>
+	</div>
+	<div>
+		<h3>People connected:</h3>
+		<div id="connected_clients"></div>
 	</div>
 	<div id='video_area'>
 		<video id='main_video' controls>
@@ -23,10 +28,16 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
+	// User stuffz
+	var changeNameButton = $('#update_name');
+
+	// Video stuffz
 	var video = $('#main_video');
 	var videoUrl = $('#video_url');
 	var changeVideoUrl = $('#change_url');
 	var videoArea = $('#video_area');
+
+
 	var socket = io.connect('http://localhost');
 
 	function sync(data) {
@@ -37,6 +48,10 @@
 	}
 	socket.on('startup:current_video', function(data) {
 		changeSource(data['src']);
+	});
+
+	socket.on('startup:name', function(data) {
+		$('#name').val(data.name);
 	});
 
 	socket.on('player:pause', function(data) {
@@ -56,8 +71,33 @@
 	socket.on('player:change_src', function(data) {
 		changeSource(data['src']);
 	});
+
+	socket.on('user:update:clientlist', function(data) {
+		console.log(data);
+		var htmlString = "<ul>";
+		for (var i = 0; i < data.length; i++) {
+			htmlString += "<li>";
+			htmlString += "<span>" + data[i].name + "--</span><span>";
+			if (data[i].ready) {
+				htmlString += "Ready";
+			} else {
+				htmlString += "Not ready"
+			}
+			htmlString += "</span></li>";
+		}
+		htmlString += "</ul>";
+		$('#connected_clients').html(htmlString);
+		
+	});
 </script>
 <script>
+	function changeName(newName) {
+		var payload = {
+			'name': newName
+		};
+		socket.emit('user:update:name', payload);
+	}
+
 	function getPayload(video) {
 		var video = video[0];
 		return {
@@ -73,8 +113,6 @@
 	};
 
 	function changeSource(sourceUrl) {
-		console.log(sourceUrl);
-		console.log(_buildVideoElem(sourceUrl));
 		videoArea.html(_buildVideoElem(sourceUrl));
 		video = $('#main_video');
 		bindVideoEvents();
@@ -84,10 +122,17 @@
 		video.on('pause', function() {	
 			socket.emit("player:pause", getPayload(video));
 		});
+
 		video.on('play', function() {
 			socket.emit("player:play", getPayload(video));
 		});
+
 		video.on('timeupdate', function(data) {
+		});
+
+		video.on('canplay', function() {
+			console.log('can play');
+			socket.emit('player:ready', getPayload(video));
 		});
 
 		changeVideoUrl.click(function() {
@@ -100,6 +145,9 @@
 
 
 	$(function() {
+		changeNameButton.click(function() {
+			changeName($('#name').val());
+		});
 		bindVideoEvents();
 	});
 
