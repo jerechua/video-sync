@@ -6,17 +6,15 @@ exports.setupSocket = function(server) {
 
   io.sockets.on('connection', function (socket) {
     socket.on('player:pause', function(data) {
-        // console.log('sending pause');
         socket.broadcast.emit('player:pause', data);
     });
 
     socket.on('player:play', function(data) {
-        // console.log('sending play');
         socket.broadcast.emit('player:play', data);
     });
 
     socket.on('player:timeupdate', function(data) {
-
+        // Implement this for slow internet connection buffers
     });
 
     socket.on('disconnect', function() {

@@ -1,13 +1,20 @@
 <html>
 <body>
 	<h1>Hello world!</h1>
-	<video id="main-video" controls autoplay>
-		<source src="/public/sample.mp4"/>
+	<video id="my_video_1" class="video-js vjs-default-skin" controls
+		 preload="auto" width="640" height="264" poster="my_video_poster.png"
+		 data-setup="{}">
+		 <source src="my_video.mp4" type='video/mp4'>
+		 <source src="my_video.webm" type='video/webm'>
 	</video>
 
 </body>
+<link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
+
+<script src="http://vjs.zencdn.net/4.3/video.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+
 <script>
 	var video = $('#main-video');
 	var socket = io.connect('http://localhost');
@@ -27,7 +34,7 @@
 	});
 
 	socket.on('player:timechange', function(data) {
-
+		// Implement this for slow internet connection buffers
 	});
 </script>
 <script>
