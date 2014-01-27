@@ -98,6 +98,7 @@ exports.setupSocket = function(server) {
         socket.on('disconnect', function() {
             //clean up
             delete clients[socket.id];
+            emitClientList(socket);
         });
 
     });

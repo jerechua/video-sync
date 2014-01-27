@@ -1,8 +1,10 @@
-function changeName(newName) {
+function changeName($name) {
+    $name.attr('placeholder', $name.val());
     var payload = {
-        'name': newName
+        'name': $name.val()
     };
     socket.emit('user:update:name', payload);
+    $name.val('');
 }
 
 function getPayload(video) {
@@ -56,7 +58,7 @@ $(function() {
         evt.preventDefault();
     });
     changeNameButton.click(function() {
-        changeName($('#name').val());
+        changeName($('#name'));
     });
     bindVideoEvents();
 });

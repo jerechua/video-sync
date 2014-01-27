@@ -26,7 +26,7 @@ socket.on('startup:current_video', function(data) {
 });
 
 socket.on('startup:name', function(data) {
-    $('#name').val(data.name);
+    $('#name').attr('placeholder', data.name);
 });
 
 socket.on('player:pause', function(data) {

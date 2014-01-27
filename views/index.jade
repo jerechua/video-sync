@@ -1,24 +1,31 @@
 doctype html
 html
+    head
+        title Awesome Video Player
     body
+        nav.navbar.navbar-default.navbar-static-top
+            span.navbar-brand 
+                strong Awesome Video Player
         .container
             .row
                 .col-md-9
-                    h3 Welcome 
-                        input#name
-                        button#update_name.btn.btn-primary change your name
+                    form.input-group.prevent-default
+                        input#name.form-control(type='text')
+                        span.input-group-btn
+                            input#update_name.btn.btn-primary(type='submit', value='change your name')
+
+                    form.input-group.prevent-default
+                        input#video_url.form-control(type="text", placeholder="video mp4 url here")
+                        span.input-group-btn
+                            input#change_url.btn.btn-primary(type="submit", value="Change video")
                     
                     #video_area
                         video#main_video(controls)
                              source(src="public/sample.mp4", type='video/mp4')
 
-                    form.prevent-default
-                        input#video_url(type="text", placeholder="video mp4 url here")
-                        input#change_url.btn.btn-primary(type="submit", value="Change video")
-                
                 .col-md-3
                     .panel.panel-info
-                        .panel-heading People connected:
+                        .panel-heading People connected
                         #connected_clients
 
             

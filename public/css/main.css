@@ -1,3 +1,8 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #main_video {
     display: block;
+    width: 100%;
 }
