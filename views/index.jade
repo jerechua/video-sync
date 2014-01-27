@@ -1,0 +1,29 @@
+doctype html
+html
+    body
+        div
+            div
+                h3 Welcome 
+                    input#name
+                    button#update_name change your name
+                
+            
+            input#video_url(type="text", placeholder="video mp4 url here")
+            button#change_url Change video
+        
+        div
+            h3 People connected:
+            #connected_clients
+        
+        div#video_area
+            video#main_video(controls)
+                 source(src="public/sample.mp4", type='video/mp4')
+        
+
+
+    script(src="//code.jquery.com/jquery-1.10.2.min.js")
+    script(src="/socket.io/socket.io.js")
+
+    <!-- App stuff -->
+    script(src="/public/js/socket.js")
+    script(src="/public/js/main.js")
