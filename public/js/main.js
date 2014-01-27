@@ -52,6 +52,9 @@ function bindVideoEvents() {
 
 
 $(function() {
+    $('.prevent-default').click(function(evt) {
+        evt.preventDefault();
+    });
     changeNameButton.click(function() {
         changeName($('#name').val());
     });

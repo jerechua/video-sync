@@ -4,11 +4,11 @@ exports.setupSocket = function(server) {
 
     var currentVideo = "";
 
-    var PAUSE = 0;
-    var PLAY = 1;
+    var PAUSE = "Paused";
+    var PLAY = "Playing";
 
-    var NOT_READY = 0;
-    var READY = 1;
+    var NOT_READY = "Not Ready";
+    var READY = "Ready";
 
     var videoState = PAUSE;
 
@@ -38,7 +38,7 @@ exports.setupSocket = function(server) {
         _.each(clients, function(client) {
             var data = {
                 'name': client.name,
-                'ready': client.status
+                'status': client.status
             };
             clientList.push(data);
         });
@@ -59,11 +59,15 @@ exports.setupSocket = function(server) {
         socket.on('player:pause', function(data) {
             videoState = PAUSE;
             socket.broadcast.emit('player:pause', data);
+            clients[socket.id].status = PAUSE;
+            emitClientList(socket);
         });
 
         socket.on('player:play', function(data) {
             videoState = PLAY;
             socket.broadcast.emit('player:play', data);
+            clients[socket.id].status = PLAY;
+            emitClientList(socket);
         });
 
         socket.on('player:seek', function(data) {
@@ -73,7 +77,7 @@ exports.setupSocket = function(server) {
         socket.on('player:change_src', function(data) {
             videoState = PAUSE;
             currentVideo = data['src'];
-            _.each(clientList, function(client) {
+            _.each(clients, function(client) {
                 client.status = NOT_READY;
             });
             emitClientList(socket);

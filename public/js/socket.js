@@ -49,18 +49,26 @@ socket.on('player:change_src', function(data) {
 });
 
 socket.on('user:update:clientlist', function(data) {
-    var htmlString = "<ul>";
+    var htmlString = "<table class='table'>";
+    htmlString +=  "<thead><tr><th>Name</th><th>Status</th></tr></thead>";
+    htmlString += "<tbody>";
     for (var i = 0; i < data.length; i++) {
-        htmlString += "<li>";
-        htmlString += "<span>" + data[i].name + "--</span><span>";
-        if (data[i].ready) {
-            htmlString += "Ready";
-        } else {
-            htmlString += "Not ready"
+        htmlString += "<tr>";
+        htmlString += "<td>" + data[i].name + "</td><td>";
+        htmlString += "<span class='label ";
+        switch(data[i].status) {
+            case "Ready": 
+                htmlString += "label-success"; break;
+            case "Not Ready":
+                htmlString += "label-danger"; break;
+            case "Playing":
+                htmlString += "label-primary"; break;
+            case "Paused":
+                htmlString += "label-warning"; break;
         }
-        htmlString += "</span></li>";
+        htmlString += "'>" + data[i].status + "</span>";
+        htmlString += "</td></tr>";
     }
-    htmlString += "</ul>";
+    htmlString += "</tbody></table>";
     $('#connected_clients').html(htmlString);
-    
 });

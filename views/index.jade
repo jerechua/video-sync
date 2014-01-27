@@ -1,29 +1,34 @@
 doctype html
 html
     body
-        div
-            div
-                h3 Welcome 
-                    input#name
-                    button#update_name change your name
+        .container
+            .row
+                .col-md-9
+                    h3 Welcome 
+                        input#name
+                        button#update_name.btn.btn-primary change your name
+                    
+                    #video_area
+                        video#main_video(controls)
+                             source(src="public/sample.mp4", type='video/mp4')
+
+                    form.prevent-default
+                        input#video_url(type="text", placeholder="video mp4 url here")
+                        input#change_url.btn.btn-primary(type="submit", value="Change video")
                 
+                .col-md-3
+                    .panel.panel-info
+                        .panel-heading People connected:
+                        #connected_clients
+
             
-            input#video_url(type="text", placeholder="video mp4 url here")
-            button#change_url Change video
+                
         
-        div
-            h3 People connected:
-            #connected_clients
-        
-        div#video_area
-            video#main_video(controls)
-                 source(src="public/sample.mp4", type='video/mp4')
-        
-
-
+    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
     script(src="//code.jquery.com/jquery-1.10.2.min.js")
     script(src="/socket.io/socket.io.js")
 
     <!-- App stuff -->
+    link(rel="stylesheet", href="/public/css/main.css")
     script(src="/public/js/socket.js")
     script(src="/public/js/main.js")
