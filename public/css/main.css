@@ -2,6 +2,14 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.brand {
+    font-weight: bold;
+}
+
+.brand:hover {
+    text-decoration: none;
+}
+
 #main_video {
     display: block;
     width: 100%;

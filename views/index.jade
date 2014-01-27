@@ -3,9 +3,11 @@ html
     head
         title Awesome Video Player
     body
-        nav.navbar.navbar-default.navbar-static-top
-            span.navbar-brand 
-                strong Awesome Video Player
+        nav.navbar.navbar-default(role="navigation")
+            .container
+                .navbar-header
+                    span.navbar-brand 
+                        a(href="/").brand Awesome Video Player
         .container
             .row
                 .col-md-12
@@ -16,7 +18,6 @@ html
                             input#room_name.form-control(type='text', placeholder='Room Name')
                             span.input-group-btn
                                 input.btn.btn-primary(type='submit', value='Get started!')
-                        
                         .row
                             .col-md-6
                                 h2 What is it?
