@@ -8,31 +8,42 @@ html
                 strong Awesome Video Player
         .container
             .row
-                .col-md-9
-                    form.input-group.prevent-default
-                        input#name.form-control(type='text')
-                        span.input-group-btn
-                            input#update_name.btn.btn-primary(type='submit', value='change your name')
+                .col-md-12
+                    .jumbotron
+                        h1 Awesome Video Player
+                        p Watching videos with friends made easy!
+                        form#join_room.input-group
+                            input#room_name.form-control(type='text', placeholder='Room Name')
+                            span.input-group-btn
+                                input.btn.btn-primary(type='submit', value='Get started!')
+                        
+                        .row
+                            .col-md-6
+                                h2 What is it?
+                                ul.description
+                                    li "Bring your own video" player
+                                    li Syncs all your videos to the same time!
+                                    li Lets you know when people have loaded and are ready to watch
+                            .col-md-6
+                                h2 How to use?
+                                ul.description
+                                    li Type in any room name to join
+                                    li Give your friends the link to the room
+                                    li After everyone has left the room, the video information gets deleted
 
-                    form.input-group.prevent-default
-                        input#video_url.form-control(type="text", placeholder="video mp4 url here")
-                        span.input-group-btn
-                            input#change_url.btn.btn-primary(type="submit", value="Change video")
-                    
-                    #video_area
-                        video#main_video(controls)
-                             source(src="public/sample.mp4", type='video/mp4')
+                    span.github
+                        a(href="https://github.com/jerechua/video-sync") Github repository
 
-                .col-md-3
-                    .panel.panel-info
-                        .panel-heading People connected
-                        #connected_clients
-
-            
-                
         
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
     script(src="//code.jquery.com/jquery-1.10.2.min.js")
     
     <!-- App stuff -->
     link(rel="stylesheet", href="/public/css/main.css")
+    script.
+        $(function() {
+            $('#join_room').submit(function(evt) {
+                evt.preventDefault();
+                window.location = "/" + $('#room_name').val();
+            });
+        });

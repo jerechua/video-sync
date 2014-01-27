@@ -6,3 +6,16 @@ body {
     display: block;
     width: 100%;
 }
+
+#join_room input {
+    height: 2em;
+    font-size: 1.25em;
+}
+
+.github {
+    float: right;
+}
+
+.description {
+    padding-left: 1em;
+}
