@@ -18,6 +18,11 @@ app.get('/', function(req, res) {
     // res.sendfile("./index.html");
 });
 
+app.get('/:room', function(req, res) {
+    var roomName = req.param('room');
+    res.render('room.jade', {'roomName': roomName});
+});
+
 /** Start server */
 
 var server = http.createServer(app);

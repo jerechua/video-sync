@@ -9,6 +9,7 @@ var videoArea = $('#video_area');
 
 
 var socket = io.connect(document.location.origin);
+socket.emit('subscribe', {'room': roomName});
 
 function sync(data) {
     var videoStats = getPayload(video);
@@ -20,6 +21,8 @@ function sync(data) {
     if (Math.abs(data.time - videoStats.time) > 1) {
         video[0].currentTime = data['time'];
     }
+
+    $('#current_video').html(data.src);
 }
 socket.on('startup:current_video', function(data) {
     changeSource(data['src']);
