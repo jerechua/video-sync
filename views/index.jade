@@ -1,50 +1,50 @@
 doctype html
 html
-    head
-        title Awesome Video Player
-    body
-        nav.navbar.navbar-default(role="navigation")
-            .container
-                .navbar-header
-                    span.navbar-brand 
-                        a(href="/").brand Awesome Video Player
-        .container
+  head
+    title Awesome Video Player
+  body
+    nav.navbar.navbar-default(role="navigation")
+      .container
+        .navbar-header
+          span.navbar-brand
+            a(href="/").brand Awesome Video Player
+    .container
+      .row
+        .col-md-12
+          .jumbotron
+            h1 Awesome Video Player
+            p Watching videos with friends made easy!
+            form#join_room.input-group
+              input#room_name.form-control(type='text', placeholder='Room Name')
+              span.input-group-btn
+                input.btn.btn-primary(type='submit', value='Get started!')
             .row
-                .col-md-12
-                    .jumbotron
-                        h1 Awesome Video Player
-                        p Watching videos with friends made easy!
-                        form#join_room.input-group
-                            input#room_name.form-control(type='text', placeholder='Room Name')
-                            span.input-group-btn
-                                input.btn.btn-primary(type='submit', value='Get started!')
-                        .row
-                            .col-md-6
-                                h2 What is it?
-                                ul.description
-                                    li "Bring your own video" player
-                                    li Syncs all your videos to the same time!
-                                    li Lets you know when people have loaded and are ready to watch
-                            .col-md-6
-                                h2 How to use?
-                                ul.description
-                                    li Type in any room name to join
-                                    li Give your friends the link to the room
-                                    li After everyone has left the room, the video information gets deleted
+              .col-md-6
+                h2 What is it?
+                ul.description
+                  li "Bring your own video" player
+                  li Syncs all your videos to the same time!
+                  li Lets you know when people have loaded and are ready to watch
+              .col-md-6
+                h2 How to use?
+                ul.description
+                  li Type in any room name to join
+                  li Give your friends the link to the room
+                  li After everyone has left the room, the video information gets deleted
 
-                    span.github
-                        a(href="https://github.com/jerechua/video-sync") Github repository
+          span.github
+            a(href="https://github.com/jerechua/video-sync") Github repository
 
-        
-    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
-    script(src="//code.jquery.com/jquery-1.10.2.min.js")
-    
-    <!-- App stuff -->
-    link(rel="stylesheet", href="/public/css/main.css")
-    script.
-        $(function() {
-            $('#join_room').submit(function(evt) {
-                evt.preventDefault();
-                window.location = "/" + $('#room_name').val();
-            });
-        });
+
+  link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
+  script(src="//code.jquery.com/jquery-1.10.2.min.js")
+
+  <!-- App stuff -->
+  link(rel="stylesheet", href="/public/css/main.css")
+  script.
+    $(function() {
+      $('#join_room').submit(function(evt) {
+        evt.preventDefault();
+        window.location = "/" + $('#room_name').val();
+      });
+    });

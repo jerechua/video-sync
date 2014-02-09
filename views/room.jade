@@ -1,53 +1,54 @@
 doctype html
 html
-    head
-        title Awesome Video Player
-        script.
-            var roomName = "#{roomName}";
+  head
+    title Awesome Video Player
+    script.
+      var roomName = "#{roomName}";
 
-    body
-        nav.navbar.navbar-default(role="navigation")
-            .container
-                .navbar-header
-                    span.navbar-brand 
-                        a(href="/").brand Awesome Video Player
-                .collapse.navbar-collapse
-                    ul.nav.navbar-nav
-                        li.icon-bar 
-                            a #{roomName}
-        .container
-            .row
-                .col-md-9
-                    form.input-group.prevent-default
-                        input#name.form-control(type='text')
-                        span.input-group-btn
-                            input#update_name.btn.btn-primary(type='submit', value='change your name')
+  body
+    nav.navbar.navbar-default(role="navigation")
+      .container
+        .navbar-header
+          span.navbar-brand
+            a(href="/").brand Awesome Video Player
+        .collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.icon-bar
+              a #{roomName}
+    .container
+      .row
+        .col-md-9
+          form.input-group.prevent-default
+            input#name.form-control(type='text')
+            span.input-group-btn
+              input#update_name.btn.btn-primary(type='submit', value='change your name')
 
-                    form.input-group.prevent-default
-                        input#video_url.form-control(type="text", placeholder="video mp4 url here")
-                        span.input-group-btn
-                            input#change_url.btn.btn-primary(type="submit", value="Change video")
+          form.input-group.prevent-default
+            input#video_url.form-control(type="text", placeholder="video mp4 url here")
+            span.input-group-btn
+              input#change_url.btn.btn-primary(type="submit", value="Change video")
 
-                    div
-                        span#current_video Nothing
-                    
-                    #video_area
-                        video#main_video(controls)
-                             source(src="public/sample.mp4", type='video/mp4')
+          div
+            span#current_video Nothing
 
-                .col-md-3
-                    .panel.panel-info
-                        .panel-heading People connected
-                        #connected_clients
+          #video_area
+            video#main_video(controls)
+               source(src="public/sample.mp4", type='video/mp4')
 
-            
-                
-        
-    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
-    script(src="//code.jquery.com/jquery-1.10.2.min.js")
-    script(src="/socket.io/socket.io.js")
+        .col-md-3
+          .panel.panel-info
+            .panel-heading People connected
+            #connected_clients
 
-    <!-- App stuff -->
-    link(rel="stylesheet", href="/public/css/main.css")
-    script(src="/public/js/socket.js")
-    script(src="/public/js/main.js")
+
+
+
+  link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
+  script(src="//code.jquery.com/jquery-1.10.2.min.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="/public/js/vendor/simple-webrtc.js")
+
+  <!-- App stuff -->
+  link(rel="stylesheet", href="/public/css/main.css")
+  script(src="/public/js/socket.js")
+  script(src="/public/js/main.js")

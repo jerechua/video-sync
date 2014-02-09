@@ -1,29 +1,29 @@
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .brand {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .brand:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 #main_video {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
 #join_room input {
-    height: 2em;
-    font-size: 1.25em;
+  height: 2em;
+  font-size: 1.25em;
 }
 
 .github {
-    float: right;
+  float: right;
 }
 
 .description {
-    padding-left: 1em;
+  padding-left: 1em;
 }
