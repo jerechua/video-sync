@@ -12,17 +12,19 @@ var socket = io.connect(document.location.origin);
 socket.emit('subscribe', {'room': roomName});
 
 function sync(data) {
-  var videoStats = getPayload(video);
-  if (data.src != videoStats.src) {
-    changeSource(data.src);
-  }
-  // Might need to be refactored, this will be hit
-  // n client times for each user if someone seeks
-  if (Math.abs(data.time - videoStats.time) > 1) {
-    video[0].currentTime = data['time'];
-  }
+  _.throttle(function() {
+    var videoStats = getPayload(video);
+    if (data.src != videoStats.src) {
+      changeSource(data.src);
+    }
+    // Might need to be refactored, this will be hit
+    // n client times for each user if someone seeks
+    if (Math.abs(data.time - videoStats.time) > 1) {
+      video[0].currentTime = data['time'];
+    }
 
-  $('#current_video').html(data.src);
+    $('#current_video').html(data.src);
+  }, 1000);
 }
 socket.on('startup:current_video', function(data) {
   changeSource(data['src']);
