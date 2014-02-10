@@ -1,5 +1,18 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-image: url('/public/img/background.jpg');
+  height: 100%;
+  padding-top: 1.5em;
+}
+
+.main-container {
+  height: 100%;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 1em 1em 0 0;
 }
 
 .brand {
@@ -32,6 +45,35 @@ body {
   width: 100%;
 }
 
+#friends-webcams {
+  position: absolute;
+  height: 11em;
+  top: 1.75em;
+  padding: 0em 3em;
+}
+
 #friends-webcams video {
+  margin-right: 1em;
+  height: 100%;
+}
+
+.friends-area {
+  position: relative;
+  margin-top: 1em;
   width: 100%;
+  height: 12.75em;
+}
+
+.friends-area:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #222222;
+  opacity: .6;
+  content: "";
+}
+
+.webcam {
+  position: relative;
+
 }

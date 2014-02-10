@@ -6,31 +6,18 @@ html
       var roomName = "#{roomName}";
 
   body
-    nav.navbar.navbar-default(role="navigation")
-      .container
-        .navbar-header
+
+    .container.main-container
+      .navbar-header
           span.navbar-brand
             a(href="/").brand Awesome Video Player
         .collapse.navbar-collapse
           ul.nav.navbar-nav
             li.icon-bar
               a #{roomName}
-    .container
       .row
+
         .col-md-9
-          form.input-group.prevent-default
-            input#name.form-control(type='text')
-            span.input-group-btn
-              input#update_name.btn.btn-primary(type='submit', value='change your name')
-
-          form.input-group.prevent-default
-            input#video_url.form-control(type="text", placeholder="video mp4 url here")
-            span.input-group-btn
-              input#change_url.btn.btn-primary(type="submit", value="Change video")
-
-          div
-            span#current_video Nothing
-
           #video_area
             video#main_video(controls)
                source(src="public/sample.mp4", type='video/mp4')
@@ -42,7 +29,29 @@ html
 
           #my-webcam
 
-          #friends-webcams
+
+
+          div
+              span#current_video Nothing
+
+          form.input-group.prevent-default
+            input#name.form-control(type='text')
+            span.input-group-btn
+              input#update_name.btn.btn-primary(type='submit', value='change your name')
+
+          form.input-group.prevent-default
+            input#video_url.form-control(type="text", placeholder="video mp4 url here")
+            span.input-group-btn
+              input#change_url.btn.btn-primary(type="submit", value="Change video")
+
+      .row.webcam
+        .container.friends-area
+        .container#friends-webcams
+
+
+
+
+
 
   link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
   script(src="//code.jquery.com/jquery-1.10.2.min.js")
