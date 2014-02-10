@@ -28,22 +28,23 @@ function changeSource(sourceUrl) {
 };
 
 function bindVideoEvents() {
-  video.on('pause', function() {
+  var THROTTLE_WAIT = 100;
+  video.on('pause', _.throttle(function() {
     socket.emit("player:pause", getPayload(video));
-  });
+  }, THROTTLE_WAIT));
 
-  video.on('play', function() {
+  video.on('play', _.throttle(function() {
     socket.emit("player:play", getPayload(video));
-  });
+  }, THROTTLE_WAIT));
 
-  video.on('seeked', function(data) {
+  video.on('seeked', _.throttle(function(data) {
     video[0].pause();
     socket.emit("player:seek", getPayload(video));
-  });
+  }, THROTTLE_WAIT));
 
-  video.on('canplay', function() {
+  video.on('canplay', _.throttle(function() {
     socket.emit('player:ready', getPayload(video));
-  });
+  }, THROTTLE_WAIT));
 
   changeVideoUrl.click(function() {
     var newUrl = videoUrl.val();
