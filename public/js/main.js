@@ -28,7 +28,7 @@ function changeSource(sourceUrl) {
 };
 
 function bindVideoEvents() {
-  var THROTTLE_WAIT = 100;
+  var THROTTLE_WAIT = 500;
   video.on('pause', _.throttle(function() {
     socket.emit("player:pause", getPayload(video));
   }, THROTTLE_WAIT));
