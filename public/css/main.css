@@ -27,3 +27,11 @@ body {
 .description {
   padding-left: 1em;
 }
+
+#my-webcam video {
+  width: 100%;
+}
+
+#friends-webcams video {
+  width: 100%;
+}
